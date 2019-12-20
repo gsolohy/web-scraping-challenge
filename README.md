@@ -9,6 +9,6 @@
 2. MongoDB and Flask Application - scrape_mars.py & app.py & templates/index.html
 3. App Screenshots
 
-![final_app_01](screenshots/app_scrnshot01.png)
-![final_app_02](screenshots/app_scrnshot02.png)
-![final_app_03](screenshots/app_scrnshot03.png)
+![final_app_01](Missions_to_Mars/screenshots/app_scrnshot01.png)
+![final_app_02](Missions_to_Mars/screenshots/app_scrnshot02.png)
+![final_app_03](Missions_to_Mars/screenshots/app_scrnshot03.png)
