@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
 
+import pymongo
+
 def init_browser():
     # Execute chromedriver.exe
     executable_path = {'executable_path': 'chromedriver.exe'}
@@ -46,8 +48,8 @@ def scrape():
     wthr_html = browser.html
     wthr_soup = bs(wthr_html, 'lxml')
 
-    mars_weather = wthr_soup.find('p', class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text").text
-
+    wthr_xpath = '//*[@id="stream-item-tweet-1207720064440553478"]/div[1]/div[2]/div[2]/p'
+    mars_weather = browser.find_by_xpath(wthr_xpath).text
     print(f'Mars Weather: {mars_weather}')
 
     
@@ -56,9 +58,12 @@ def scrape():
     tables = pd.read_html(fact_url)
     browser.visit(fact_url)
 
-    mars_fact = tables[1].set_index(['Mars - Earth Comparison'])
+    mars_fact = tables[1]
+    del mars_fact['Earth']
+    mars_fact.rename(columns={'Mars - Earth Comparison':'Description'}, inplace=True)
+    mars_fact.set_index('Description', inplace=True)
     mars_fact_html = mars_fact.to_html()
-
+    
     
     # Mars Hemispheres
     atro_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
