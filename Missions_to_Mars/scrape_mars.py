@@ -4,11 +4,13 @@ import requests
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
 
-# Execute chromedriver.exe
-executable_path = {'executable_path': 'chromedriver.exe'}
-browser = Browser('chrome', **executable_path, headless=False)
+def init_browser():
+    # Execute chromedriver.exe
+    executable_path = {'executable_path': 'chromedriver.exe'}
+    return Browser('chrome', **executable_path, headless=False)
 
-def scrape():  
+def scrape():
+    browser = init_browser()
     # NASA Mars News
     nasa_url = 'https://mars.nasa.gov/news/'
     browser.visit(nasa_url)
@@ -94,7 +96,7 @@ def scrape():
     browser.quit()
     print('Scrape Completed')
     
-    # MongoDB Mars Data
+    # MongoDB Mars Data in dictionary
     mars_data = {'news_date': news_date,
                  'news_title': news_title,
                  'news_p': news_p,
