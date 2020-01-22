@@ -1,5 +1,6 @@
 # web-scraping-challenge
 
+* Chromedriver.exe version 79.0.3945.36 - make sure you have correct chrome driver that matches your chrome browser
 ## Webscraping and Mongo Homework - Mission to Mars
 * Due on Thursday: December 19, 2019
 
