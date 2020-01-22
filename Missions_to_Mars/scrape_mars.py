@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
+import time
 
 import pymongo
 
@@ -16,6 +17,7 @@ def scrape():
     # NASA Mars News
     nasa_url = 'https://mars.nasa.gov/news/'
     browser.visit(nasa_url)
+    time.sleep(2)
 
     nasa_html = browser.html
     nasa_soup = bs(nasa_html, 'lxml')
@@ -44,12 +46,15 @@ def scrape():
     # Mars Weather
     twiiter_url = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(twiiter_url)
+    time.sleep(2)
 
     wthr_html = browser.html
     wthr_soup = bs(wthr_html, 'lxml')
 
-    wthr_xpath = '//*[@id="stream-item-tweet-1207720064440553478"]/div[1]/div[2]/div[2]/p'
-    mars_weather = browser.find_by_xpath(wthr_xpath).text
+    # wthr_xpath = '//*[@id="stream-item-tweet-1207720064440553478"]/div[1]/div[2]/div[2]/p'
+    xpath2 = '/html/body/div[2]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div[4]/div/div[2]/ol[1]/li[2]/div[1]/div[2]/div[2]/p'
+    # mars_weather = browser.find_by_xpath(wthr_xpath).text
+    mars_weather = browser.find_by_xpath(xpath2).text
     print(f'Mars Weather: {mars_weather}')
 
     
@@ -57,6 +62,7 @@ def scrape():
     fact_url = 'https://space-facts.com/mars/'
     tables = pd.read_html(fact_url)
     browser.visit(fact_url)
+    time.sleep(2)
 
     mars_fact = tables[1]
     del mars_fact['Earth']
@@ -68,6 +74,7 @@ def scrape():
     # Mars Hemispheres
     atro_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(atro_url)
+    time.sleep(2)
 
     products_html = browser.html
     products_soup = bs(products_html, 'lxml')
@@ -77,6 +84,7 @@ def scrape():
     for i in products_items:
         link_url = i.find('a', class_="itemLink product-item")['href']
         visit_urls.append(link_url)
+        time.sleep(2)
 
     baseURL = 'https://astrogeology.usgs.gov'
     titles = []
@@ -84,6 +92,7 @@ def scrape():
     for visit in visit_urls:
         search_url = baseURL+visit
         browser.visit(search_url)
+        time.sleep(2)
         hem_html = browser.html
         hemi_soup = bs(hem_html, 'lxml')
         
